@@ -8,6 +8,7 @@
             <ul class="hide-on-med-and-down">
                 <li><a @click= "openModal1"><i class="material-icons">menu</i></a></li>
             </ul>
+            <span class="right">HDLAN 111820 &nbsp;&nbsp;</span>
         </div>
     </nav>
 
@@ -15,8 +16,8 @@
     <div id="modal1" class="modal">
              <h5 class = 'center-align'>Power</h5>
              <div id = 'power'>
-                <button class="waves-effect waves-light btn green center-align">PoE On</button>
-                <button class="waves-effect waves-light btn red center-align">PoE Off</button>
+                <button @click= "PoE('on')" class="waves-effect waves-light btn green center-align">PoE On</button>
+                <button @click= "PoE('off')" class="waves-effect waves-light btn red center-align">PoE Off</button>
              </div>
 
             <br>
@@ -29,7 +30,7 @@
 
             <div class="modal-footer">
                 <a @click= "closeModal1" class="modal-close waves-effect waves-light btn red">Cancel</a>
-                <a @click= "openModal2" class="modal-close waves-effect waves-light btn blue ">Submit</a>
+                <a @click= "submit" class="modal-close waves-effect waves-light btn blue ">Submit</a>
             </div>
     </div>
 
@@ -73,23 +74,33 @@ export default {
     },
     methods:{
         checkRoute(){
-            if(this.$route.name =='home'){
-                this.showZoneTitle = false
-            }else{
+            if(this.$route.name.includes('zone')){
                 this.showZoneTitle = true
+            }else{
+                this.showZoneTitle = false
             }
+        },
+        PoE(on_off){
+            const serverURL = `${location.hostname}:1880`
+            // Send 
+            fetch( `http://${serverURL}/poe/${on_off}`)
+            .then(()=> {
+                M.toast({ html: `PoE Power ${on_off}`, classes: "rounded blue" })
+            })
+            .catch(error => console.log(error));
         },
         openModal1(){
              this.modalInstance1.open();
-             console.log(this.$route)
+             //console.log(this.$route)
         },
         closeModal1(){
             this.modalInstance1.close();
         },
-        openModal2(){
+        submit(){
             this.modalInstance1.close();
             if(this.admin =='octava'){
-            this.modalInstance2.open();
+                this.admin = ''
+                this.modalInstance2.open();
             }else{
                 alert('No access')
             }
@@ -116,6 +127,9 @@ export default {
                     this.closeModal2()
                 })
                 .catch(error => console.log(error));
+
+            this.$router.push({ name: `zone1`})  //a hack. forces route to change to zone 1 ->home to force a re-read of server
+            this.$router.push({ name: `home`})
         }
 
     },

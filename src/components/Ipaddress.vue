@@ -4,9 +4,11 @@
      
       <form >
             <h5>Cisco SG350 IP Address</h5>
-            <h6 class = 'red-text'>Re-power Cisco SG350 before proceeding </h6>
+            <h6>{{snmpStatus.model}}</h6>
+            <!-- <h6 class = 'red-text'>Re-power Cisco SG350 before proceeding </h6> -->
             <div class="field">
                 <label for="IP Address"></label>
+                <p></p>
                 <input name="IP Address" v-model= "ipAddress" placeholder="Enter IP Address(Ex 192.168.1.128)" type="text" required>
             </div>
  
@@ -33,7 +35,6 @@ export default {
         feedbackMessage: null
     }
   },
-
   methods:{
     cancel(e){
         e.preventDefault()
@@ -42,28 +43,34 @@ export default {
 
     connect(e){
       e.preventDefault()
-      console.log(this.ipAddress)
+      const serverURL = location.hostname
+
+      // Switch all RX ports to Vlan2 ( default mode) if switch ip previously
+      // Prevents false reading of switch settings.
+      if(this.snmpStatus.model == ''){
+        //do nothing. switch ip has not been set
+      }else{
+          // Switch All RX to vlan2
+          fetch(`http://${serverURL}:1880/switchAll/vlan/2`)
+      }
+
+      //Save IP address of Cisco Switch to server
       if(this.ipAddress){
-        const serverURL = `${location.hostname}:3000`
-        
         this.$emit('msg-switchIp',{switchIp:this.ipAddress})
-        
         // Save switch config to server
-        let sg350Config = {"ip":"","TXports":"" ,"RXports":""}  //
+        let sg350Config = {"ip":"","TXports":this.snmpStatus.txCount ,"RXports":this.snmpStatus.rxCount }  //
         sg350Config['ip'] = this.ipAddress
         
         //console.log(`http://${serverURL}/write/UserSwitchConfig/${JSON.stringify(sg350Config)}`)
-        fetch(`http://${serverURL}/write/UserSwitchConfig/${JSON.stringify(sg350Config)}`)
+        fetch(`http://${serverURL}:3000/write/UserSwitchConfig/${JSON.stringify(sg350Config)}`)
         .then(()=> {
           this.$router.push({name:'dashboard'})
         })
         .catch(error => console.log(error));
-        
-
       }else{
         this.feedbackMessage = "Enter IP address for Cisco SG350 Switch!"
       }
-    }
+    },
   },
 
 }

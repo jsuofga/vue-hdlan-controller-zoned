@@ -9,7 +9,7 @@
           <div class = 'zoneSelect'>
               <p @click= "zoneSelect(item,index)" v-for="(item,index) in zoneNames" :key="index">
                   <label>
-                    <input name="group1" type="radio" checked  />
+                    <input name="group1" type="radio"  />
                     <span>{{item}}</span>
                   </label>
               </p>
@@ -27,7 +27,6 @@
                   <p>{{tvNames[index]}}</p>
                   <span class = "edit"><i class="material-icons modal-trigger" href="#modal3" v-on:click= "edit(index)">edit</i></span>
                   <small>Zone-{{zones[index]}}</small>
-              
                   <span class = "trash"><i class="material-icons" v-on:click= "trash(index)">delete_forever</i></span>
               </div>
         </div>
@@ -48,7 +47,7 @@
                   <div class = 'ModalzoneSelect'>
                     <p @click= "zoneSelect(item,index)" v-for="(item,index) in zoneNames" :key="index">
                         <label>
-                          <input name="group1" type="radio" checked />
+                          <input name="group1" type="radio"  />
                           <span>{{item}}</span>
                         </label>
                     </p>
@@ -68,22 +67,18 @@
 
 export default {
     name: 'Name_outputs',
-    props:['zones','zonesId','zoneNames','tvNames'],
+    props:['zones','zonesId','zoneNames','tvNames','snmpStatus'],
     watch:{
     },
     data(){
         return{
           tvName: null,
-          tvNames:[],
-          zoneNames:[],
           zone:null,
-          zoneId:null,
-          zonesId:[],
-          zones:[],
           id:''  // RX selected for editing . ID = 0 is RX1, ID = 1 is RX2
         }
     },
     methods: {
+
       zoneSelect(item,index){
           // console.log('zoneSelect',index)
           this.zoneId = index+1
@@ -93,11 +88,16 @@ export default {
           this.$forceUpdate()
       },
       add(){
-        this.tvNames.push(this.tvName)
-        this.zones.push(this.zone)
-        this.zonesId.push(this.zoneId)
-        // console.log('zonesId',this.zonesId)
-        this.tvName = ''
+        if(this.tvNames.length < this.snmpStatus.rxCount){
+           this.tvNames.push(this.tvName)
+           this.zones.push(this.zone)
+           this.zonesId.push(this.zoneId)
+           this.tvName = ''
+        //if inputs exceeds number of rxCount on switch
+        }else{
+          alert('Exceeded number of RX ports')
+          this.tvName  = ''
+        }
       },
       edit(index){
         //this.tvNames.splice(index,1)
@@ -116,8 +116,8 @@ export default {
           // Read user inputs and save
           let tvNamesZones = []
           this.tvNames.forEach((item,index)=>{
-              let tvAndzone = {rxId: index+1, name:item, zoneId: this.zonesId[index], zone:this.zones[index]}
-              tvNamesZones.push(tvAndzone) 
+             let tvAndzone = {rxId: index+1, name:item, zoneId: this.zonesId[index], zone:this.zones[index]}
+             tvNamesZones.push(tvAndzone) 
           })
           console.log(tvNamesZones)
           this.$emit('msg-tvNamesZonesUpdated', tvNamesZones)

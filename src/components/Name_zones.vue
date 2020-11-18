@@ -2,7 +2,7 @@
   <div class="name-zones box ">
      
       <form >
-            <h6>Create Zones </h6>
+            <h5>Create Zones </h5>
             <div class="field">
                 <!-- <label for="Video Input"></label> -->
                 <div class = 'inputDiv' > 

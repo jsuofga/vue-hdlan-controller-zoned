@@ -154,15 +154,20 @@ export default {
   },
   methods:{
       save(){
-           const serverURL = `${location.hostname}:3000`
+           const serverURL = location.hostname
             // Save switch config to server
             let sg350Config = {"ip":"","TXports":"" ,"RXports":""}  //
             sg350Config['ip'] = this.snmpStatus.SwitchIPAddress
             sg350Config['TXports'] = this.txCount
             sg350Config['RXports'] = this.rxCount
             
-            fetch(`http://${serverURL}/write/UserSwitchConfig/${JSON.stringify(sg350Config)}`)
+            fetch(`http://${serverURL}:3000/write/UserSwitchConfig/${JSON.stringify(sg350Config)}`)
             .then(()=> {
+
+              // Switch All RX to vlan2
+              fetch(`http://${serverURL}:1880/switchAll/vlan/2`)
+              
+              // Show Home Page
               this.$router.push({name:'home'})
             })
             .catch(error => console.log(error));
@@ -209,7 +214,7 @@ export default {
   height:20vh;
   width:90%;
   /* background-color: rgb(28,28,30); */
-  border:1px solid lightgrey;
+  border:1px solid  white;
   border-radius:6px;
 }
 .sg350{

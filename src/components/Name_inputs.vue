@@ -34,7 +34,7 @@
 
 export default {
     name: 'Name_inputs',
-    props:['sourceNames'],
+    props:['sourceNames','snmpStatus'],
     watch:{
       sourceNames: function() {
           this.$emit('msg-sourceNamesUpdated',this.sourceNames)
@@ -42,15 +42,19 @@ export default {
     },
     data(){
         return{
-          sourceName: '',
-          sourceNames:[]
+          
         }
     },
     methods: {
       add(){
-        this.sourceNames.push(this.sourceName)
-       // console.log(this.sourceNames)
-        this.sourceName = ''
+        if(this.sourceNames.length < this.snmpStatus.txCount){
+           this.sourceNames.push(this.sourceName)
+           this.sourceName = ''
+        //if inputs exceeds number of txPorts on switch
+        }else{
+          alert('Exceeded number of TX ports')
+          this.sourceName = ''
+        }
       },
       trash(index){
         this.sourceNames.splice(index,1)
