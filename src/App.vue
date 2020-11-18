@@ -20,6 +20,7 @@
         v-bind:tvNamesZones = "tvNamesZones" 
         v-bind:snmpStatus= "snmpStatus" 
         v-bind:switchIpAddress= "switchIpAddress"
+        v-bind:userPresetsExist= "userPresetsExist"
     />
     <Status @msg-status= "status" @msg-sourceNamesUpdated= "sourceNamesUpdated" @msg-tvNamesZonesUpdated= "tvNamesZonesUpdated"/>
 
@@ -77,8 +78,10 @@ export default {
      tvNames:[],     
      zoneNames:[],  // complete list of zone names created
      zones:[],      //zone that each RX is assigned to
+     zonesId:[],
      zoneNamesToDisplay: [],  //zone names that are actually assigned to tv
      zoneNumber: '', // zone selected 0-xxx to show on Navbar Title
+     userPresetsExist:[false,false,false] // [userPreset1,userPreset2.userPreset3 ] true / false
     }
 },
 
@@ -114,25 +117,25 @@ export default {
       this.zoneNumber = payload.zoneId
     },
     readFromSever(){
+        console.log('route changed')
         this.get_zoneNames()
         this.get_tvZoneAssignment()
         this.get_sourceNames()
+        this.get_UserPresets()
     },
     get_zoneNames(){
          const serverURL = `${location.hostname}:3000`
          this.zoneNames=[]
         // Read from Server
-          fetch(`http://${serverURL}/read/UserZoneNames`, {
-            method: 'GET',
-          })
+          fetch(`http://${serverURL}/read/UserZoneNames`, {method: 'GET',})
           .then(response => response.json())
           .then(result => {
-             //console.log('Success:', result);
+             //console.log('ZoneNames Success:', result);
              let item;
              for( item in result){
                this.zoneNames.push(result[item])
              }
-              console.log(this.zoneNames)
+              console.log('Zone names = ',this.zoneNames)
           })
           .catch(error => {
             console.error('Error:', error);
@@ -140,7 +143,6 @@ export default {
 
     },
     get_tvZoneAssignment(){
-        console.log('route changed')
         const serverURL = `${location.hostname}:3000`
         this.zones = [],
         this.zonesId = [],
@@ -149,9 +151,7 @@ export default {
         this.tvNames = []
        
       // Read from Server
-        fetch(`http://${serverURL}/read/UserTvNames`, {
-          method: 'GET',
-        })
+        fetch(`http://${serverURL}/read/UserTvNames`, {method: 'GET',})
         .then(response => response.json())
         .then(result => {
           console.log('Success:', result);
@@ -171,7 +171,6 @@ export default {
             console.log( this.zoneNamesToDisplay)
             console.log( this.tvNamesZones)
             console.log( this.tvNames)
-            
         })
         .catch(error => {
           console.error('Error:', error);
@@ -181,9 +180,7 @@ export default {
         this.sourceNames = []
         const serverURL = `${location.hostname}:3000`
         // Read from Server
-          fetch(`http://${serverURL}/read/UserInputNames`, {
-            method: 'GET',
-          })
+          fetch(`http://${serverURL}/read/UserInputNames`, {method: 'GET',})
           .then(response => response.json())
           .then(result => {
             console.log('Success:', result);
@@ -199,6 +196,31 @@ export default {
             console.error('Error:', error);
           });
          
+    },
+    get_UserPresets(){
+      const serverURL = location.hostname
+      //Check if User Preset exist.
+      // Check if Presets1,2,3 were created by user.
+            for(let i=0;i<=2;i++){
+                fetch(`http://${serverURL}:3000/read/UserPreset${i+1}`,{method: 'GET',})
+                .then(response => response.json())
+                .then(result => {
+                  // console.log('Success:', result);
+                  //Check if Preset1,2,3 is empty.
+                  if(Object.keys(result).length == 0){
+                    this.userPresetsExist[i] = false
+
+                  //Preset exist
+                  }else{
+                    this.userPresetsExist[i] = true
+                  }
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                });
+
+            }
+            //console.log('UserPresets Exist:', this.userPresetsExist)
     }
 
   },
@@ -217,7 +239,6 @@ export default {
 
 <style>
 #app {
-  
   background-color: #2c3e50;
   /* box-sizing: border-box;  */
 
