@@ -227,11 +227,8 @@ export default {
 
   //Lifecycle Hooks
   mounted () {
-
     M.AutoInit() //Materialize Init
-   
     this.readFromSever()
-
   },
 }
 
@@ -241,6 +238,7 @@ export default {
 #app {
   background-color: #2c3e50;
   /* box-sizing: border-box;  */
+  position:relative;
 
 }
 </style>
