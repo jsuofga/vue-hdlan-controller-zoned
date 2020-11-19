@@ -99,8 +99,8 @@ export default {
 
   //Life Cycle Hooks
   mounted(){
-       M.AutoInit() // For Materialize to work!
-
+        M.AutoInit() // For Materialize to work!
+        window.scrollTo(0, 0) //Top of page
   }
 
 }
@@ -110,7 +110,10 @@ export default {
 .home{
   display:flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
+  height:100vh;
+  position:absolute;
 }
 .welcome{
   color:white;
@@ -118,7 +121,8 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height:100vh;
+  position:relative;
+  top:-10%;
 }
 .single-zone{
     display: grid;

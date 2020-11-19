@@ -64,9 +64,11 @@ export default {
   grid-template-columns: repeat(10, 1fr);
   justify-content: center;
   align-items: center ;
-  grid-gap: 10px;
+  grid-gap: 5px;
   width:90%;
   height:100vh;
+  position: relative;
+  top:-64px;
   /* border:1px solid red */
 }
 .grid-item{
@@ -78,6 +80,7 @@ export default {
 .btn-large{
   background-color:white;
   border-radius: 4px;
+   width:100%;
   position:relative;
 }
 span{

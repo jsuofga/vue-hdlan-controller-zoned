@@ -16,7 +16,7 @@
           <div class = 'grid-item'><span><i class="material-icons small" style = "color:white">inbox</i></span>LAN</div>
       </div>
 
-     <div class = 'sg350'>
+     <div v-if= "snmpStatus.model !== ''" class = 'sg350'>
         <div v-if= "is52Port" class = 'port1-48'>
             <div class = 'grid-item'  v-for="(item, index) in portS" :key="index" ><i class="material-icons small " v-bind:style= "{color: portsColor[index],opacity: portsActive[index]}" >inbox</i>{{item+1}}</div>
         </div >  
@@ -40,7 +40,10 @@
       <div class ='progressFeedback'>Reading switch settings {{completion}}</div>
     </div>
 
-    <button @click= "save" class="waves-effect waves-light btn-large blue" v-bind:disabled= "onOff"><i class="material-icons left">save</i>Save</button>
+
+    <button v-if= "showSaveButton" @click= "save" class="waves-effect waves-light btn-large blue" v-bind:disabled= "onOff"><i class="material-icons left">save</i>Save</button>
+    <button v-else  @click= "cancel" class="waves-effect waves-light btn-large red"><i class="material-icons left">cancel</i>cancel</button>
+    <!-- <button @click= "save" class="waves-effect waves-light btn-large blue" v-bind:disabled= "onOff"><i class="material-icons left">save</i>Save</button> -->
 
 
   </div>
@@ -53,7 +56,7 @@ export default {
   data () {
     return {
         completion: '0%',
-        showSaveButton: false,
+        showSaveButton: true,
         onOff: true
     }
   },
@@ -171,12 +174,19 @@ export default {
               this.$router.push({name:'home'})
             })
             .catch(error => console.log(error));
-       }
+       },
+      cancel(){
+            
+            // Show Home Page
+              this.$router.push({name:'home'})
+      },
 },
   created(){
 
   },
   mounted(){
+    //Top of page
+    window.scrollTo(0, 0);
        
     //Run progress bar and update every 600ms. Hide Save button until after 1 minute
     let counter = 0
@@ -185,7 +195,16 @@ export default {
         this.completion = `${counter}%`
         if(counter == 100){
           clearInterval(timer)
-          this.onOff = false
+          if(this.snmpStatus.model !== ''){
+            
+            this.onOff = false
+
+          //switch not detected
+          }else{
+            alert("Switch not detected. Please check")
+             this.showSaveButton = false
+          }
+          
         }
     },600)
 

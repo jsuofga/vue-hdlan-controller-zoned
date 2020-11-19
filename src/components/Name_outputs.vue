@@ -17,7 +17,7 @@
         </div>
 
         <div class = 'field inputDiv' >
-              <input id = 'input' name="input" v-model= "tvName" placeholder="Enter Name of TV to add" type="text" >
+              <input id = 'input' name="input" v-model= "tvName" placeholder="Enter Name of TV to add" type="text" maxlength="8">
               <span class = "add"><i class="material-icons" v-on:click= "add">add</i></span>
         </div>
 
@@ -42,7 +42,7 @@
                 <div class="modal-content">
                   <h4 class = "center-align" >TV {{id + 1}}</h4>
                     <label v-bind:for= "tvNames[id]">TV{{id+1}} Name.</label>
-                    <input class = 'inputFont' type="text" name = "tvNames[id]" v-model= "tvNames[id]">
+                    <input class = 'inputFont' type="text" name = "tvNames[id]" v-model= "tvNames[id]" maxlength="8">
    
                   <div class = 'ModalzoneSelect'>
                     <p @click= "zoneSelect(item,index)" v-for="(item,index) in zoneNames" :key="index">
@@ -135,9 +135,9 @@ export default {
       }
   },
   //Life Cycle Hooks
-
     mounted(){
-         M.AutoInit() // For Materialize to work!
+        M.AutoInit() // For Materialize to work!
+        window.scrollTo(0, 0) //Top of page
     }
 }
 

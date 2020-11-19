@@ -8,7 +8,8 @@
             <ul class="hide-on-med-and-down">
                 <li><a @click= "openModal1"><i class="material-icons">menu</i></a></li>
             </ul>
-            <span class="right">HDLAN 111820 &nbsp;&nbsp;</span>
+             <span v-if= "snmpStatus.SwitchPingTest === 'fail'" class="new badge red" data-badge-caption="switch not detected!"></span>
+            <span class="right">HDLAN 111920 &nbsp;&nbsp;</span>
         </div>
     </nav>
 
@@ -37,10 +38,10 @@
     <div id="modal2" class="modal">
         <div class="modal-content-settings center-align">
             <ul class = "center-align">
-                <router-link to="/ipaddress"><li @click= "closeModal2"><i class="material-icons blue-icon">settings_ethernet</i><span>Initialize Switch</span></li></router-link>
-                <router-link to="/name-inputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Edit Video Inputs</span></li></router-link>
-                <router-link to="/name-zones"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Edit Zones/Groups</span> </li></router-link>
-                <router-link to="/name-outputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Edit Video Outputs</span></li></router-link>
+                <router-link to="/ipaddress"><li @click= "closeModal2"><i class="material-icons blue-icon">router</i><span>Initialize Switch</span></li></router-link>
+                <router-link to="/name-zones"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Zones/Groups(optional)</span> </li></router-link>
+                <router-link to="/name-inputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Video Inputs</span></li></router-link>
+                <router-link to="/name-outputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Video Outputs</span></li></router-link>
                 <li @click= "savePreset(1)" ><router-link to=""><i class="material-icons blue-icon"> save</i><span>Save to Preset 1</span></router-link></li>
                 <li @click= "savePreset(2)" ><router-link to=""><i class="material-icons blue-icon">save</i><span>Save to Preset 2</span> </router-link></li>
                 <li @click= "savePreset(3)" ><router-link to=""><i class="material-icons blue-icon">save</i><span>Save to Preset 3</span> </router-link></li>
@@ -74,10 +75,12 @@ export default {
     },
     methods:{
         checkRoute(){
-            if(this.$route.name.includes('zone')){
-                this.showZoneTitle = true
+           
+           //If route name is zone1,zone2, zone3,zone4...checks for a number in string
+            if(this.$route.name.match(/\d+/g)){
+                 this.showZoneTitle = true  //Show zone name
             }else{
-                this.showZoneTitle = false
+                this.showZoneTitle = false  //Show logo
             }
         },
         PoE(on_off){
@@ -147,7 +150,6 @@ export default {
 </script>
 
 <style scoped>
-
     .nav-extended{
         background-color: rgb(28,28,30);
     }

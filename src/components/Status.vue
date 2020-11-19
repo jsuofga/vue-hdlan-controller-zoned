@@ -32,7 +32,7 @@ export default {
         })
         .catch(()=> {
             //console.log('ERROR!'); 
-          //  alert('Gateway not connected')
+            alert('HDLAN Controller not connected')
         })
           
       },

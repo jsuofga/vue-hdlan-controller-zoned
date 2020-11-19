@@ -6,7 +6,7 @@
             <div class="field">
                 <!-- <label for="Video Input"></label> -->
                 <div class = 'inputDiv' > 
-                      <input id = 'input' name="input" v-model= "sourceName" placeholder="Enter Name of Video Input to add" type="text" required>
+                      <input id = 'input' name="input" v-model= "sourceName" placeholder="Enter Name of Video Input to add" type="text" required maxlength="10">
                       <span class = "add"><i class="material-icons" v-on:click= "add">add</i></span>
                 </div>
             </div>
@@ -14,7 +14,7 @@
           <div class = 'listDiv'>
                    <div class = "gridItem" v-for="(item,index) in sourceNames" :key="index">
                       <label v-bind:for= "sourceNames[index]">Input{{index+1}}.</label>
-                      <input class = 'inputFont' type="text" name = "sourceNames[index]" v-model= "sourceNames[index]">
+                      <input class = 'inputFont' type="text" name = "sourceNames[index]" v-model= "sourceNames[index]" maxlength="10">
                       <span class = "trash"><i class="material-icons" v-on:click= "trash(index)">delete_forever</i></span>
                   </div>
           </div>
@@ -46,6 +46,7 @@ export default {
         }
     },
     methods: {
+      
       add(){
         if(this.sourceNames.length < this.snmpStatus.txCount){
            this.sourceNames.push(this.sourceName)
@@ -89,8 +90,8 @@ export default {
   },
   //Life Cycle Hooks
     mounted(){
-
-         
+        M.AutoInit() // For Materialize to work!
+        window.scrollTo(0, 0) //Top of page
     }
 }   
 

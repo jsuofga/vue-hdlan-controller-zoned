@@ -6,7 +6,7 @@
             <div class="field">
                 <!-- <label for="Video Input"></label> -->
                 <div class = 'inputDiv' > 
-                      <input id = 'input' name="input" v-model= "zoneName" placeholder="Enter Name of Zone/Group " type="text" required>
+                      <input id = 'input' name="input" v-model= "zoneName" placeholder="Enter Name of Zone/Group " type="text" required maxlength="8">
                       <span class = "add"><i class="material-icons" v-on:click= "add">add</i></span>
                 </div>
             </div>
@@ -14,7 +14,7 @@
           <div class = 'listDiv'>
                    <div class = "gridItem" v-for="(item,index) in zoneNames" :key="index">
                       <label>Zone{{index+1}}.</label> 
-                      <input class = 'inputFont' type="text" name = "zoneNames[index]" v-model= "zoneNames[index]">
+                      <input class = 'inputFont' type="text" name = "zoneNames[index]" v-model= "zoneNames[index]" maxlength="8"> 
                       <span class = "trash"><i class="material-icons" v-on:click= "trash(index)">delete_forever</i></span>
                   </div>
           </div>
@@ -81,7 +81,8 @@ export default {
   },
   //Life Cycle Hooks
     mounted(){
-         console.log("test", this.tvNamesZones)
+        M.AutoInit() // For Materialize to work!
+        window.scrollTo(0, 0) //Top of page
     }
 }   
 
