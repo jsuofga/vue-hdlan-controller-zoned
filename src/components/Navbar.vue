@@ -4,21 +4,24 @@
     <nav class="nav-extended">
         <div class="nav-wrapper">
             <div v-if = 'showZoneTitle' class="brand-logo center">{{zoneNames[zoneNumber]}}</div>
-            <div v-else class="brand-logo center"><img src="@/assets/images/octava_logo_white-200.png"> </div>
+            <div v-else class="brand-logo center">
+                <img src="@/assets/images/octava_logo_white-200.png">  
+            </div>
             <ul class="hide-on-med-and-down">
                 <li><a @click= "openModal1"><i class="material-icons">menu</i></a></li>
             </ul>
              <span v-if= "snmpStatus.SwitchPingTest === 'fail'" class="new badge red" data-badge-caption="switch not detected!"></span>
-            <span class="right">HDLAN 111920 &nbsp;&nbsp;</span>
+             <span v-if= "pingControllerStatus === 'fail'" class="new badge red" data-badge-caption="HDLAN Controller not detected!"></span>
+            <span class="right">HDLAN 112020 &nbsp;&nbsp;</span>
         </div>
     </nav>
 
     <!-- Modal Structure -->
     <div id="modal1" class="modal">
              <h5 class = 'center-align'>Power</h5>
-             <div id = 'power'>
-                <button @click= "PoE('on')" class="waves-effect waves-light btn green center-align">PoE On</button>
-                <button @click= "PoE('off')" class="waves-effect waves-light btn red center-align">PoE Off</button>
+             <div id = 'power' class = 'valign-wrapper'>
+                    <button @click= "PoE('on')" class="waves-effect waves-light btn green center-align">PoE On</button>
+                    <button @click= "PoE('off')" class="waves-effect waves-light btn red center-align">PoE Off</button>
              </div>
 
             <br>
@@ -63,7 +66,7 @@
 
 export default {
     name: 'Navbar',
-    props:['snmpStatus','zoneNames','zoneNumber'],
+    props:['snmpStatus','zoneNames','zoneNumber','pingControllerStatus'],
     data () {
         return {
             admin:'',
@@ -156,16 +159,18 @@ export default {
     #power{
         display:flex;
         justify-content: center ;
-        align-items: center ;
+        align-items: center;
         margin-top:20px;
-        border-bottom:1px solid  rgb(28,28,30); 
+        margin-left:100px;
+        margin-right:100px;
+        height: 15%;
+        border:1px solid lightgray;
+        border-radius: 10px;
     }
     button{
         margin-left:20px;
         margin-right:20px;
-        margin-bottom:20px
     }
- 
     .blue-icon{
         color:#2196f3 !important;
         padding: 10px;

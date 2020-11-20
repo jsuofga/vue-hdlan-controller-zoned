@@ -14,6 +14,7 @@ export default {
         sourceNames:[],
         tvNames:[],
         zoneNames:[],
+        pingController:null
     }
   },
   methods:{
@@ -28,11 +29,11 @@ export default {
          // console.log(myJson)
           this.status = myJson
           this.$emit('msg-status',this.status)
-              
+          this.$emit('msg-pingController','ok')
         })
         .catch(()=> {
             //console.log('ERROR!'); 
-            alert('HDLAN Controller not connected')
+          this.$emit('msg-pingController','fail')
         })
           
       },
