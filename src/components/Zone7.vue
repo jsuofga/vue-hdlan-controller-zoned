@@ -1,6 +1,6 @@
 <template>
 
-  <div class="zone4">
+  <div class="zone7">
 
         <div class = 'grid-container'>
 
@@ -22,11 +22,11 @@
 <script>
 
 export default {
-  name: 'Zone4',
+  name: 'Zone7',
   props:['snmpStatus','zoneNames','tvNames','tvNamesZones','zones','sourceNames'],
   data () {
     return {
-      zone: 4      // Enter Zone here
+      zone: 7      // Enter Zone here
     }
   },
   computed:{
@@ -48,14 +48,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.zone4{
+.zone7{
   display:flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width:100%;
   height:100vh;
-  /* border:1px solid orange; */
+   /* border:1px solid orange; */
 }
 .grid-container {
   color:white;
@@ -66,8 +66,7 @@ export default {
   grid-gap: 5px;
   width:90%;
   height:100vh;
-  position: relative;
-  top:-64px;
+  position: relative; 
   /* border:1px solid red */
 }
 .grid-item{

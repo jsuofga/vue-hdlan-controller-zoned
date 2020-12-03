@@ -6,7 +6,7 @@
             <div class="field">
                 <!-- <label for="Video Input"></label> -->
                 <div class = 'inputDiv' > 
-                      <input id = 'input' name="input" v-model= "zoneName" placeholder="Enter Name of Zone/Group " type="text" required maxlength="8">
+                      <input id = 'input' name="input" v-model= "zoneName" placeholder="Enter Name of Zone/Group " type="text" required maxlength="10">
                       <span class = "add"><i class="material-icons" v-on:click= "add">add</i></span>
                 </div>
             </div>
@@ -14,7 +14,7 @@
           <div class = 'listDiv'>
                    <div class = "gridItem" v-for="(item,index) in zoneNames" :key="index">
                       <label>Zone{{index+1}}.</label> 
-                      <input class = 'inputFont' type="text" name = "zoneNames[index]" v-model= "zoneNames[index]" maxlength="8"> 
+                      <input class = 'inputFont' type="text" name = "zoneNames[index]" v-model= "zoneNames[index]" maxlength="10"> 
                       <span class = "trash"><i class="material-icons" v-on:click= "trash(index)">delete_forever</i></span>
                   </div>
           </div>
@@ -48,9 +48,15 @@ export default {
     },
     methods: {
       add(){
-        this.zoneNames.push(this.zoneName)
-       // console.log(this.sourceNames)
-        this.zoneName = ''
+        //Check to make sure only maxium Zones created
+        if(this.zoneNames.length < 8){
+          this.zoneNames.push(this.zoneName)
+          this.zoneName = ''
+        //if zone exceed 8
+        }else{
+          alert('Max allowed zones is 8')
+          this.zoneName = ''
+        }
       },
       trash(index){
         this.zoneNames.splice(index,1)
@@ -134,7 +140,7 @@ input[type=text]:focus{
 }
 .listDiv{
     display:grid;
-    grid-template-columns:repeat(10, 1fr);
+    grid-template-columns:repeat(4, 1fr);
     position:relative;
     margin:10px
 }

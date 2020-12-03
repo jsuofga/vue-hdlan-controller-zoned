@@ -6,7 +6,7 @@
         <li><a>Select Video Input</a></li>
         
         <li><div class="divider"></div></li>
-        <li @click= "emitMsg(index)" v-for="(item, index) in sourceNames" :key="index">{{index+1}}.<a class="waves-effect"><i class="material-icons" >input</i>{{item}}</a></li>
+        <li @click= "emitMsg(index)" v-for="(item, index) in sourceNames" :key="index">Port{{index+1}}.<a class="waves-effect"><i class="material-icons" >input</i>{{item}}</a></li>
         
     </ul>
  <!-- <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>  -->

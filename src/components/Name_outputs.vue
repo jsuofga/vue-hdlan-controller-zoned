@@ -3,9 +3,10 @@
 
     <div class = 'formContainer'>
         <h5 class = "center-align">Add Displays </h5>
-
-        <div id = 'zoneMenu' class = 'field' >
-          <label>Assign Zone</label>
+<!-- 
+        <div id = 'zoneMenu' class = 'field' > -->
+        <div class = 'zoneMenu' > 
+         <label class="center-align"><strong>Pick zone for display</strong> </label>
           <div class = 'zoneSelect'>
               <p @click= "zoneSelect(item,index)" v-for="(item,index) in zoneNames" :key="index">
                   <label>
@@ -17,7 +18,7 @@
         </div>
 
         <div class = 'field inputDiv' >
-              <input id = 'input' name="input" v-model= "tvName" placeholder="Enter Name of TV to add" type="text" maxlength="8">
+              <input id = 'input' name="input" v-model= "tvName" placeholder="Enter Name of TV to add" type="text" maxlength="10">
               <span class = "add"><i class="material-icons" v-on:click= "add">add</i></span>
         </div>
 
@@ -42,7 +43,7 @@
                 <div class="modal-content">
                   <h4 class = "center-align" >TV {{id + 1}}</h4>
                     <label v-bind:for= "tvNames[id]">TV{{id+1}} Name.</label>
-                    <input class = 'inputFont' type="text" name = "tvNames[id]" v-model= "tvNames[id]" maxlength="8">
+                    <input class = 'inputFont' type="text" name = "tvNames[id]" v-model= "tvNames[id]" maxlength="10">
    
                   <div class = 'ModalzoneSelect'>
                     <p @click= "zoneSelect(item,index)" v-for="(item,index) in zoneNames" :key="index">
@@ -164,12 +165,20 @@ export default {
   width:80%;
   margin:20px;
 }
-.zoneSelect{
+.zoneMenu{
   display:flex;
+  flex-direction:column;
   justify-content: center;
-  align-items: center;
+  width:80%;
+  margin-bottom:20px;
+}
+.zoneSelect{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
   border:1px solid lightgray;
   border-radius: 4px;
+  width:100%;
+
 }
 .ModalzoneSelect{
   display:grid;

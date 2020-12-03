@@ -5,9 +5,8 @@
         <div class = 'grid-container'>
 
             <div v-for="(item, index) in tvsInZone" :key="index" class='grid-item'>
-              <div data-target="slide-out" @click= "emitMsg(item)" class="btn-large sidenav-trigger" style= 'color:black'>{{item.name}}<span>{{item.rxId}}</span></div>
+              <div data-target="slide-out" @click= "emitMsg(item)" class="btn-large sidenav-trigger" style= 'color:black'><small>{{item.name}}</small><span>P{{item.rxId + snmpStatus.txCount}}</span></div>
               <div class = 'feedbackRX'>{{sourceNames[snmpStatus.PortVlanMembership[item.rxId-1+snmpStatus.txCount] -2]}}</div>
-
             </div>
         </div>
 
@@ -67,8 +66,7 @@ export default {
   grid-gap: 5px;
   width:90%;
   height:100vh;
-  position: relative;
-  top:-64px;
+  position: relative; 
   /* border:1px solid red */
 }
 .grid-item{
@@ -81,13 +79,20 @@ export default {
   background-color:white;
   border-radius: 4px;
   width:100%;
+  padding:2px;
   position:relative;
+
+}
+small{
+    text-transform: capitalize;
+    color:black
 }
 span{
   position:absolute;
   color:grey;
-  bottom:-15px;
-  right:1px;
+  padding:0px;
+  top:-20px;
+  right:0px;
   transform: scale(.7);
 }
 .btn-large:hover{

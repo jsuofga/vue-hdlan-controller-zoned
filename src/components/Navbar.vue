@@ -12,7 +12,8 @@
             </ul>
              <span v-if= "snmpStatus.SwitchPingTest === 'fail'" class="new badge red" data-badge-caption="switch not detected!"></span>
              <span v-if= "pingControllerStatus === 'fail'" class="new badge red" data-badge-caption="HDLAN Controller not detected!"></span>
-            <span class="right">HDLAN 112020 &nbsp;&nbsp;</span>
+             <span v-if= "snmpStatus.PoE === 0 " class="new badge red" data-badge-caption="No PoE Power"></span>
+            <span class="right">HDLAN 120220 &nbsp;&nbsp;</span>
         </div>
     </nav>
 
@@ -45,6 +46,8 @@
                 <router-link to="/name-zones"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Zones/Groups(optional)</span> </li></router-link>
                 <router-link to="/name-inputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Video Inputs</span></li></router-link>
                 <router-link to="/name-outputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Video Outputs</span></li></router-link>
+               <router-link to="/timer"><li @click= "closeModal2"><i class="material-icons blue-icon">alarm_add</i>Timer PoE On/Off <span></span></li></router-link>
+
                 <li @click= "savePreset(1)" ><router-link to=""><i class="material-icons blue-icon"> save</i><span>Save to Preset 1</span></router-link></li>
                 <li @click= "savePreset(2)" ><router-link to=""><i class="material-icons blue-icon">save</i><span>Save to Preset 2</span> </router-link></li>
                 <li @click= "savePreset(3)" ><router-link to=""><i class="material-icons blue-icon">save</i><span>Save to Preset 3</span> </router-link></li>

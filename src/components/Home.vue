@@ -11,9 +11,8 @@
       </div>
       <div v-else class = "zone" >
           <div @click= "showZone(item,index)" class = "waves-effect waves-light roundBtn btn-large" v-for="(item,index) in zoneNamesToDisplay" :key="index">{{zoneNamesToDisplay[index]}}</div>
-          <div @click= "switchAll" data-target="slide-out" class="waves-effect waves-light roundBtn btn-large sidenav-trigger">ALL Zones</div>
+          <div @click= "switchAll" data-target="slide-out" class="waves-effect waves-light roundBtn btn-large sidenav-trigger"><i class="material-icons">all_inclusive</i>ALL</div>
      </div>
-     
  
      <!-- Floating Action Button -->
     <div class="fixed-action-btn ">
@@ -136,10 +135,10 @@ export default {
 .zone{
     display: grid;
     grid-template-columns: repeat(4,auto);
-    grid-column-gap: 50px;
+    grid-column-gap: 25px;
     justify-content: center;
     align-items: center;
-    height:100vh;
+    height:80vh;
     /* border:1px solid red ; */
 }
 .roundBtn{
@@ -149,8 +148,8 @@ export default {
    align-items: center;
    border:5px solid white;
    font-size: 2rem;
-   height:200px;
-   width:200px;
+   height:180px;
+   width:180px;
    border-radius: 50%;
    background-color: rgb(28,28,30) ;
 }
