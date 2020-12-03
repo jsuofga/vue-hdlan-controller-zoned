@@ -3,6 +3,7 @@
     <Navbar v-bind:snmpStatus= "snmpStatus" 
         v-bind:zoneNames = "zoneNames" 
         v-bind:zoneNumber = "zoneNumber" 
+        v-bind:pingControllerStatus=  "pingControllerStatus"
     />
     <Sidenav @msg-txSelected= "tx" v-bind:rxSelected= "rxSelected" v-bind:sourceNames= "sourceNames" /> 
     <router-view 
@@ -22,7 +23,7 @@
         v-bind:switchIpAddress= "switchIpAddress"
         v-bind:userPresetsExist= "userPresetsExist"
     />
-    <Status @msg-status= "status" @msg-sourceNamesUpdated= "sourceNamesUpdated" @msg-tvNamesZonesUpdated= "tvNamesZonesUpdated"/>
+    <Status @msg-status= "status" @msg-sourceNamesUpdated= "sourceNamesUpdated" @msg-tvNamesZonesUpdated= "tvNamesZonesUpdated" @msg-pingController= "pingController" />
 
   </div>
 </template>
@@ -37,12 +38,16 @@ import Zone1 from '@/components/Zone1'
 import Zone2 from '@/components/Zone2'
 import Zone3 from '@/components/Zone3'
 import Zone4 from '@/components/Zone4'
-import Config from '@/components/Config'
+import Zone5 from '@/components/Zone5'
+import Zone6 from '@/components/Zone6'
+import Zone7 from '@/components/Zone7'
+import Zone8 from '@/components/Zone8'
 import Ipaddress from '@/components/Ipaddress'
 import Status from '@/components/Status'
 import Name_inputs from '@/components/Name_inputs'
 import Name_outputs from '@/components/Name_outputs'
 import Dashboard from "@/components/Dashboard";
+import Timer from "@/components/Timer";
 
 export default {
   name: 'App',
@@ -54,12 +59,16 @@ export default {
     Zone2,
     Zone3,
     Zone4,
-    Config,
+    Zone5,
+    Zone6,
+    Zone7,
+    Zone8,
     Ipaddress,
     Status,
     Name_inputs,
     Name_outputs,
-    Dashboard
+    Dashboard,
+    Timer
 
   },
   watch:{
@@ -81,7 +90,8 @@ export default {
      zonesId:[],
      zoneNamesToDisplay: [],  //zone names that are actually assigned to tv
      zoneNumber: '', // zone selected 0-xxx to show on Navbar Title
-     userPresetsExist:[false,false,false] // [userPreset1,userPreset2.userPreset3 ] true / false
+     userPresetsExist:[false,false,false], // [userPreset1,userPreset2.userPreset3 ] true / false,
+     pingControllerStatus:'ok'
     }
 },
 
@@ -104,6 +114,10 @@ export default {
        this.snmpStatus = payload
        this.serverIpAddress = payload.NodeRedIPAddress 
        console.log('ip  =', this.serverIpAddress)
+    },
+    pingController(payload){
+       console.log('ping controller  =', payload)
+       this.pingControllerStatus = payload
     },
     sourceNamesUpdated(payload){
       //  console.log('sourceNames  =', payload)
@@ -238,7 +252,7 @@ export default {
 #app {
   background-color: #2c3e50;
   /* box-sizing: border-box;  */
-  position:relative;
+ 
 
 }
 </style>
