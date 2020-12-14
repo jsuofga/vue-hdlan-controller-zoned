@@ -17,7 +17,7 @@ import Name_outputs from "@/components/Name_outputs";
 import Name_zones from "@/components/Name_zones";
 import Dashboard from "@/components/Dashboard";
 import Timer from "@/components/Timer";
-
+import Capacitycontrol from "@/components/Capacitycontrol";
 
 Vue.use(Router)
 
@@ -107,6 +107,11 @@ export default new Router({
       path: '/timer',
       name: 'timer',
       component: Timer
+    },
+    {
+      path: '/capacitycontrol',
+      name: 'capacitycontrol',
+      component: Capacitycontrol
     },
 
   ]
