@@ -48,6 +48,7 @@ import Name_inputs from '@/components/Name_inputs'
 import Name_outputs from '@/components/Name_outputs'
 import Dashboard from "@/components/Dashboard";
 import Timer from "@/components/Timer";
+import Capacitycontrol from "@/components/Capacitycontrol";
 
 export default {
   name: 'App',
@@ -68,7 +69,8 @@ export default {
     Name_inputs,
     Name_outputs,
     Dashboard,
-    Timer
+    Timer,
+    Capacitycontrol
 
   },
   watch:{
