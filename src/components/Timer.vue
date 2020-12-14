@@ -144,7 +144,7 @@ export default {
                 
             // Send PoE On command
             fetch( `http://${serverURL}/poe/on`)
-            
+
             // Go to Home page
               setTimeout(()=>{
                 this.$router.push({ name: `home`})
@@ -205,7 +205,7 @@ export default {
                       M.toast({ html: `Saved`, classes: "rounded blue" })
 
                     // Go to Home page
-                      setInterval(()=>{
+                      setTimeout(()=>{
                         this.$router.push({ name: `home`})
                       },5000)
                 
