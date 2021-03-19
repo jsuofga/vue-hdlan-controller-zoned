@@ -13,7 +13,7 @@
              <span v-if= "snmpStatus.SwitchPingTest === 'fail'" class="new badge red" data-badge-caption="switch not detected!"></span>
              <span v-if= "pingControllerStatus === 'fail'" class="new badge red" data-badge-caption="HDLAN Controller not detected!"></span>
              <span v-if= "snmpStatus.PoE === 0 " class="new badge red" data-badge-caption="No PoE Power"></span>
-            <span class="right">HDLAN 121420 &nbsp;&nbsp;</span>
+            <span class="right">HDLAN 31921 &nbsp;&nbsp;</span>
         </div>
     </nav>
 
@@ -34,7 +34,7 @@
             <div class="modal-content-admin">
                 <label for="admin"></label>
                 <i class="material-icons prefix blue-icon">persons</i>
-                <input name="admin" v-model= "admin" placeholder="Enter admin password" type="text" required>
+                <input name="admin" v-model= "admin" placeholder="Enter admin password" type="text" required autocomplete="off" >
             </div>
 
             <div class="modal-footer">
@@ -46,7 +46,7 @@
     <div id="modal2" class="modal">
         <div class="modal-content-settings center-align">
             <ul class = "center-align">
-                <router-link to="/ipaddress"><li @click= "closeModal2"><i class="material-icons blue-icon">router</i><span>Sync Switch</span></li></router-link>
+                <router-link to="/ipaddress"><li @click= "closeModal2('synch')"><i class="material-icons blue-icon">router</i><span>Sync Switch</span></li></router-link>
                 <router-link to="/name-zones"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Zones/Groups(optional)</span> </li></router-link>
                 <router-link to="/name-inputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Video Inputs</span></li></router-link>
                 <router-link to="/name-outputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Video Outputs</span></li></router-link>
@@ -118,9 +118,15 @@ export default {
                 alert('No access')
             }
         },
-        closeModal2(){
-            this.modalInstance2.close();
+        closeModal2(_input){
+            if(_input == 'synch'){
+                alert('Please re-power Cisco switch before Synchronizing switch')
+                this.modalInstance2.close();
+            }else{
+                this.modalInstance2.close();
+            }
         },
+            
         goHome(){
             this.$router.push({ name: `home`})
         },
