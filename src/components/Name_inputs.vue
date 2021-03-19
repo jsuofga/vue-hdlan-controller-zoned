@@ -48,14 +48,21 @@ export default {
     methods: {
       
       add(){
-        if(this.sourceNames.length < this.snmpStatus.txCount){
+        if(this.snmpStatus.txCount == 0){
+          // switch configured as RX only switch. 
+           this.sourceNames.push(this.sourceName)
+           this.sourceName = ''
+        }else{
+           if(this.sourceNames.length < this.snmpStatus.txCount){
            this.sourceNames.push(this.sourceName)
            this.sourceName = ''
         //if inputs exceeds number of txPorts on switch
-        }else{
-          alert('Exceeded number of TX ports')
-          this.sourceName = ''
+          }else{
+            alert('Exceeded number of TX ports')
+            this.sourceName = ''
+          }
         }
+
       },
       trash(index){
         this.sourceNames.splice(index,1)
