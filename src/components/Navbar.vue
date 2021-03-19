@@ -51,7 +51,7 @@
                 <router-link to="/name-inputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Video Inputs</span></li></router-link>
                 <router-link to="/name-outputs"><li @click= "closeModal2"><i class="material-icons blue-icon">edit</i><span>Video Outputs</span></li></router-link>
                 <router-link to="/timer"><li @click= "closeModal2"><i class="material-icons blue-icon">alarm_add</i>Timer PoE On/Off <span></span></li></router-link>
-                <router-link to="/capacitycontrol"><li @click= "closeModal2"><i class="material-icons blue-icon"> directions_walk</i><span>Capacity Control</span></li></router-link>
+                <!-- <router-link to="/capacitycontrol"><li @click= "closeModal2"><i class="material-icons blue-icon"> directions_walk</i><span>Capacity Control</span></li></router-link> -->
                 <li @click= "savePreset(1)" ><router-link to=""><i class="material-icons blue-icon"> save</i><span>Save to Preset 1</span></router-link></li>
                 <li @click= "savePreset(2)" ><router-link to=""><i class="material-icons blue-icon">save</i><span>Save to Preset 2</span> </router-link></li>
                 <li @click= "savePreset(3)" ><router-link to=""><i class="material-icons blue-icon">save</i><span>Save to Preset 3</span> </router-link></li>

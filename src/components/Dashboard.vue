@@ -167,10 +167,7 @@ export default {
             fetch(`http://${serverURL}:3000/write/UserSwitchConfig/${JSON.stringify(sg350Config)}`)
             .then(()=> {
 
-              // Switch All RX to vlan2
-              fetch(`http://${serverURL}:1880/switchAll/vlan/2`)
-
-              // set txCount and rxCount in Node Red
+               // set txCount and rxCount in Node Red
               fetch(`http://${serverURL}:1880/count/txrx`)
               
               // Show Home Page
