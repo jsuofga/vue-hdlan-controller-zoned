@@ -56,7 +56,7 @@
 
                 </div>
                 <div class="modal-footer">
-                  <a class="modal-close waves-effect waves-green btn-flat">OK</a>
+                    <a class= "modal-close waves-effect waves-light btn blue">OK</a>
                 </div>
               </div>
 
