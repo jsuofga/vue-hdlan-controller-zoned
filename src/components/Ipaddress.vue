@@ -44,16 +44,7 @@ export default {
     connect(e){
       e.preventDefault()
       const serverURL = location.hostname
-
-      // Switch all RX ports to Vlan2 ( default mode) if switch ip previously
-      // Prevents false reading of switch settings.
-      if(this.snmpStatus.model == ''){
-        //do nothing. switch ip has not been set
-      }else{
-          // Switch All RX to vlan2
-          fetch(`http://${serverURL}:1880/switchAll/vlan/2`)
-      }
-
+      
       //Save IP address of Cisco Switch to server
       if(this.ipAddress){
         this.$emit('msg-switchIp',{switchIp:this.ipAddress})
