@@ -16,6 +16,7 @@
         v-bind:zonesId = "zonesId" 
         v-bind:zoneNames = "zoneNames"  
         v-bind:zoneNamesToDisplay = "zoneNamesToDisplay"  
+        v-bind:zoneNumber = "zoneNumber" 
         v-bind:sourceNames = "sourceNames" 
         v-bind:tvNames = "tvNames" 
         v-bind:tvNamesZones = "tvNamesZones" 
@@ -34,14 +35,15 @@ import M from 'materialize-css'
 import Sidenav from '@/components/Sidenav'
 import Navbar from '@/components/Navbar'
 import Home from '@/components/Home'
-import Zone1 from '@/components/Zone1'
-import Zone2 from '@/components/Zone2'
-import Zone3 from '@/components/Zone3'
-import Zone4 from '@/components/Zone4'
-import Zone5 from '@/components/Zone5'
-import Zone6 from '@/components/Zone6'
-import Zone7 from '@/components/Zone7'
-import Zone8 from '@/components/Zone8'
+import Zones from '@/components/Zones'
+// import Zone1 from '@/components/Zone1'
+// import Zone2 from '@/components/Zone2'
+// import Zone3 from '@/components/Zone3'
+// import Zone4 from '@/components/Zone4'
+// import Zone5 from '@/components/Zone5'
+// import Zone6 from '@/components/Zone6'
+// import Zone7 from '@/components/Zone7'
+// import Zone8 from '@/components/Zone8'
 import Ipaddress from '@/components/Ipaddress'
 import Status from '@/components/Status'
 import Name_inputs from '@/components/Name_inputs'
@@ -49,6 +51,7 @@ import Name_outputs from '@/components/Name_outputs'
 import Dashboard from "@/components/Dashboard";
 import Timer from "@/components/Timer";
 import Capacitycontrol from "@/components/Capacitycontrol";
+import Update from "@/components/Update";
 
 export default {
   name: 'App',
@@ -56,21 +59,23 @@ export default {
     Navbar,
     Home,
     Sidenav,
-    Zone1,
-    Zone2,
-    Zone3,
-    Zone4,
-    Zone5,
-    Zone6,
-    Zone7,
-    Zone8,
+    Zones,
+    // Zone1,
+    // Zone2,
+    // Zone3,
+    // Zone4,
+    // Zone5,
+    // Zone6,
+    // Zone7,
+    // Zone8,
     Ipaddress,
     Status,
     Name_inputs,
     Name_outputs,
     Dashboard,
     Timer,
-    Capacitycontrol
+    Capacitycontrol,
+    Update
 
   },
   watch:{
@@ -130,7 +135,8 @@ export default {
       //  this.tvNamesZones = payload
     },
     zoneSelected(payload){
-      this.zoneNumber = payload.zoneId
+      //this.zoneNumber = payload.zoneId
+      this.zoneNumber = payload.zoneId + 1
     },
     readFromSever(){
         console.log('route changed')

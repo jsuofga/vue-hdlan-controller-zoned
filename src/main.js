@@ -6,7 +6,6 @@ import router from './router'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'material-design-icons/iconfont/material-icons.css'
 
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
