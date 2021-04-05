@@ -3,7 +3,7 @@
 
     <nav class="nav-extended">
         <div class="nav-wrapper">
-            <div v-if = 'showZoneTitle' class="brand-logo center">{{zoneNames[zoneNumber]}}</div>
+            <div v-if = 'showZoneTitle' class="brand-logo center">{{zoneNames[zoneNumber-1]}}</div>
             <div v-else class="brand-logo center">
                 <img src="@/assets/images/octava_logo_white-200.png">  
             </div>
@@ -13,7 +13,7 @@
              <span v-if= "snmpStatus.SwitchPingTest === 'fail'" class="new badge red" data-badge-caption="switch not detected!"></span>
              <span v-if= "pingControllerStatus === 'fail'" class="new badge red" data-badge-caption="HDLAN Controller not detected!"></span>
              <span v-if= "snmpStatus.PoE === 0 " class="new badge red" data-badge-caption="No PoE Power"></span>
-            <span class="right">HDLAN 32021 &nbsp;&nbsp;</span>
+            <span class="right">HDLAN 040521&nbsp;&nbsp;</span>
         </div>
     </nav>
 
@@ -55,6 +55,8 @@
                 <li @click= "savePreset(1)" ><router-link to=""><i class="material-icons blue-icon"> save</i><span>Save to Preset 1</span></router-link></li>
                 <li @click= "savePreset(2)" ><router-link to=""><i class="material-icons blue-icon">save</i><span>Save to Preset 2</span> </router-link></li>
                 <li @click= "savePreset(3)" ><router-link to=""><i class="material-icons blue-icon">save</i><span>Save to Preset 3</span> </router-link></li>
+                <router-link to="/update"><li @click= "closeModal2"><i class="material-icons blue-icon">publish</i>Update Software<span></span></li></router-link>
+
             </ul>
         </div>
             <div class="modal-footer">
@@ -86,8 +88,8 @@ export default {
     methods:{
         checkRoute(){
            
-           //If route name is zone1,zone2, zone3,zone4...checks for a number in string
-            if(this.$route.name.match(/\d+/g)){
+            //If route name is zones
+            if(this.$route.name == 'zones'){
                  this.showZoneTitle = true  //Show zone name
             }else{
                 this.showZoneTitle = false  //Show logo
@@ -193,8 +195,7 @@ export default {
         /* background-color: rgb(28,28,30); */
     }
     .modal{
-        height:80vh;
- 
+        height:100vh;
     }
     .modal-content-admin {
         display:flex;
@@ -207,7 +208,7 @@ export default {
         display:flex;
         justify-content: center ;
         align-items: center ;
-    
+            
     }
     .modal-content-settings li{
         margin:10px;

@@ -159,7 +159,7 @@ export default {
   align-items: center;
   background-color: white;
   border-radius:10px;
-  width:90%;
+  width:100%;
 }
 .field{
   width:80%;
@@ -206,9 +206,8 @@ input[type=text]:focus{
     display:grid;
     grid-template-columns:repeat(10, 1fr);
     width:100%;
-    /* position:relative; */
     margin:10px;
-    /* border:1px solid red; */
+
 }
 .gridItem{
   display:flex;

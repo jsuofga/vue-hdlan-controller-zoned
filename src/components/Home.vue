@@ -58,7 +58,8 @@ export default {
          showZone(item,index){
            let zone = index+1
            this.$emit('msg-zoneSelected', {zoneId: index})
-           this.$router.push({ name: `zone${zone}`})
+           //this.$router.push({ name: `zone${zone}`})
+           this.$router.push({ name: `zones`})
         },
          switchAll(){
           this.$emit('msg-rxSelected', {rx:{rxId:'all'}})
