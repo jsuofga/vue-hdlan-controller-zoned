@@ -5,7 +5,7 @@
         v-bind:zoneNumber = "zoneNumber" 
         v-bind:pingControllerStatus=  "pingControllerStatus"
     />
-    <Sidenav @msg-txSelected= "tx" v-bind:rxSelected= "rxSelected" v-bind:sourceNames= "sourceNames" /> 
+    <Sidenav @msg-txSelected= "tx" @msg-remoteSelected= "remoteControl" v-bind:rxSelected= "rxSelected" v-bind:sourceNames= "sourceNames" v-bind:itachIPs = "itachIPs"  v-bind:stbQty = "stbQty"  /> 
     <router-view 
         @msg-switchIp= "switchIp"
         @msg-rxSelected= "rx" 
@@ -23,6 +23,12 @@
         v-bind:snmpStatus= "snmpStatus" 
         v-bind:switchIpAddress= "switchIpAddress"
         v-bind:userPresetsExist= "userPresetsExist"
+        v-bind:itachIPs = "itachIPs" 
+        v-bind:stbQty = "stbQty" 
+        v-bind:favChNames  = "favChNames" 
+        v-bind:favChStations  = "favChStations" 
+        v-bind:remote  = "remote" 
+     
     />
     <Status @msg-status= "status" @msg-sourceNamesUpdated= "sourceNamesUpdated" @msg-tvNamesZonesUpdated= "tvNamesZonesUpdated" @msg-pingController= "pingController" />
 
@@ -36,22 +42,17 @@ import Sidenav from '@/components/Sidenav'
 import Navbar from '@/components/Navbar'
 import Home from '@/components/Home'
 import Zones from '@/components/Zones'
-// import Zone1 from '@/components/Zone1'
-// import Zone2 from '@/components/Zone2'
-// import Zone3 from '@/components/Zone3'
-// import Zone4 from '@/components/Zone4'
-// import Zone5 from '@/components/Zone5'
-// import Zone6 from '@/components/Zone6'
-// import Zone7 from '@/components/Zone7'
-// import Zone8 from '@/components/Zone8'
 import Ipaddress from '@/components/Ipaddress'
 import Status from '@/components/Status'
 import Name_inputs from '@/components/Name_inputs'
 import Name_outputs from '@/components/Name_outputs'
-import Dashboard from "@/components/Dashboard";
-import Timer from "@/components/Timer";
-import Capacitycontrol from "@/components/Capacitycontrol";
-import Update from "@/components/Update";
+import Dashboard from "@/components/Dashboard"
+import Timer from "@/components/Timer"
+import Capacitycontrol from "@/components/Capacitycontrol"
+import Update from "@/components/Update"
+import RemoteControl from "@/components/RemoteControl"
+import Itach from "@/components/Itach"
+import Favoritechannels from "@/components/Favoritechannels";
 
 export default {
   name: 'App',
@@ -60,14 +61,6 @@ export default {
     Home,
     Sidenav,
     Zones,
-    // Zone1,
-    // Zone2,
-    // Zone3,
-    // Zone4,
-    // Zone5,
-    // Zone6,
-    // Zone7,
-    // Zone8,
     Ipaddress,
     Status,
     Name_inputs,
@@ -75,7 +68,10 @@ export default {
     Dashboard,
     Timer,
     Capacitycontrol,
-    Update
+    Update,
+    RemoteControl,
+    Itach,
+    Favoritechannels
 
   },
   watch:{
@@ -98,8 +94,13 @@ export default {
      zoneNamesToDisplay: [],  //zone names that are actually assigned to tv
      zoneNumber: '', // zone selected 0-xxx to show on Navbar Title
      userPresetsExist:[false,false,false], // [userPreset1,userPreset2.userPreset3 ] true / false,
-     pingControllerStatus:'ok'
-    }
+     pingControllerStatus:'ok',
+     itachIPs:[],
+     stbQty: [], // Number of set top boxes to be controlled by Itach 
+     favChNames:[], //
+     favChStations:[], //
+     remote: '' // remote control selected
+  }
 },
 
   methods:{
@@ -111,10 +112,13 @@ export default {
       console.log('TX selected =', payload)
       this.txSelected = payload.tx
     },
+    remoteControl(payload){
+      console.log('Remote Control Selected =', payload.remote)
+      this.remote = payload.remote
+    },
     switchIp(payload){
       // console.log('Switch IP Address =', payload.switchIp)
       this.switchIpAddress = payload.switchIp
-    
     },
     status(payload){
        console.log('status  =', payload)
@@ -144,6 +148,8 @@ export default {
         this.get_tvZoneAssignment()
         this.get_sourceNames()
         this.get_UserPresets()
+        this.get_UserItachIPs()
+        this.get_UserFavChannels()
     },
     get_zoneNames(){
          const serverURL = `${location.hostname}:3000`
@@ -243,6 +249,56 @@ export default {
 
             }
             //console.log('UserPresets Exist:', this.userPresetsExist)
+    },
+      get_UserItachIPs(){
+        this.itachIPs = []
+        this.stbQty = []
+        const serverURL = `${location.hostname}:3000`
+        // Read from Server
+          fetch(`http://${serverURL}/read/UserItachIPs`, {method: 'GET',})
+          .then(response => response.json())
+          .then(result => {
+            console.log('Success:', result);
+             let item;
+             for( item in result){
+               this.itachIPs.push(result[item])
+             }
+              // console.log('before slice',this.itachIPs)
+              // console.log('after slice',this.itachIPs.slice(0,-1))
+              this.stbQty = [...this.itachIPs.slice(-1)]
+              this.itachIPs = [...this.itachIPs.slice(0,-1)]
+              
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+    },
+      get_UserFavChannels(){
+        this.favChNames= []
+        this.favChStations= []
+        const serverURL = `${location.hostname}:3000`
+        // Read from Server
+          fetch(`http://${serverURL}/read/UserFavChannels`, {method: 'GET',})
+          .then(response => response.json())
+          .then(result => {
+             console.log("journey",result)
+              let index = 0
+              let item
+              for(item in result){
+                if(index % 2 != 0){
+                  this.favChStations.push(result[item])
+                }else{
+                  this.favChNames.push(result[item])
+                }
+                index++
+              }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+          
+        console.log("names:", this.favChNames)
+        console.log("stations:", this.favChStations)
     }
 
   },
