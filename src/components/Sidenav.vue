@@ -6,10 +6,10 @@
         <li><a>Select Video Input</a></li>
         
         <li><div class="divider"></div></li>
-        <li @click= "emitMsg(index)" v-for="(item, index) in sourceNames" :key="index">Port{{index+1}}.<a class="waves-effect"><i class="material-icons" >input</i>{{item}}</a></li>
-        
+        <!-- <li @click= "emitMsg(index)" v-for="(item, index) in sourceNames" :key="index">Port{{index+1}}.<a class="waves-effect"><i class="material-icons" >input</i>{{item}}</a><i class="material-icons" >settings_remote</i></li> -->
+        <li v-for="(item, index) in sourceNames" :key="index">Port{{index+1}}.<a @click= "emitMsg(index)" class="waves-effect"><i class="material-icons" >input</i>{{item}}</a><div v-if = "index <= stbQty[0] -1" @click= "selectRemote(index)" class = "remote-icon"><i class="material-icons" >settings_remote</i></div></li>
+
     </ul>
- <!-- <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>  -->
 
   </div>
 </template>
@@ -18,15 +18,21 @@
 
 export default {
   name: 'Sidenav',
-  props:['rxSelected','sourceNames'],
+  props:['rxSelected','sourceNames','itachIPs','stbQty'],
   data () {
     return {
           sourceNames: []
+          
     }
   },
  
   methods:{
+      selectRemote(_index){
+        this.$emit('msg-remoteSelected',{remote:`${_index+1}`}) // Remote Control selected 
+        this.$router.push({ name: `remotecontrol`})
+      },
       emitMsg(index){
+         
        console.log('this',index)
         const serverURL = `${location.hostname}:1880`
         const rxID = this.rxSelected.rxId
@@ -62,6 +68,11 @@ li{
   justify-content: flex-start;
   align-items: center;
 
+}
+.remote-icon{
+  display:flex;
+  justify-content: center;
+  cursor: pointer;
 }
 
 </style>

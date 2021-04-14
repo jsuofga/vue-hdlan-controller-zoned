@@ -1,20 +1,28 @@
 <template>
-  <div class="name-inputs box ">
-     
+  <div class=" box ">
       <form >
-            <h5>Add Video Input </h5>
+              <div class= "field">
+                 <select v-model= "selected">
+                        <option value="" >Select Number of Set Top Boxes  </option>
+                        <option v-for= "(item,index) in count" :key= "index" >{{item+1}}</option>
+                 </select>
+                 <p v-if = "selected" class="center-align" ><i class="material-icons center-align" >settings_remote</i> {{selected}}</p>
+                 <p v-else class="center-align" ><i class="material-icons center-align" >settings_remote</i> {{stbQty[0]}}</p>
+                              
+             </div>
+            <h5>Add Global Cache Itach</h5>
             <div class="field">
                 <!-- <label for="Video Input"></label> -->
                 <div class = 'inputDiv' > 
-                      <input id = 'input' name="input" v-model= "sourceName" placeholder="Enter Name of Video Input to add" type="text" required maxlength="10">
+                      <input id = 'input' name="input" v-model= "itachIP" placeholder="IP Address of Itach (ex. 192.168.1.xx)" type="text" required maxlength="14">
                       <span class = "add"><i class="material-icons" v-on:click= "add">add</i></span>
                 </div>
             </div>
 
           <div class = 'listDiv'>
-                   <div class = "gridItem" v-for="(item,index) in sourceNames" :key="index">
-                      <label v-bind:for= "sourceNames[index]">Input{{index+1}}.</label>
-                      <input class = 'inputFont' type="text" name = "sourceNames[index]" v-model= "sourceNames[index]" maxlength="10">
+                   <div class = "gridItem" v-for="(item,index) in itachIPs" :key="index">
+                      <label v-bind:for= "itachIPs[index]">Global Cache Itach {{index+1}}.</label>
+                      <input class = 'inputFont' type="text" name = "itachIPs[index]" v-model= "itachIPs[index]" maxlength="14">
                       <span class = "trash"><i class="material-icons" v-on:click= "trash(index)">delete_forever</i></span>
                   </div>
           </div>
@@ -33,57 +41,51 @@
 <script>
 
 export default {
-    name: 'Name_inputs',
-    props:['sourceNames','snmpStatus'],
+    name: 'Itach',
+    props:['itachIPs','stbQty'],
     watch:{
-      sourceNames: function() {
-          this.$emit('msg-sourceNamesUpdated',this.sourceNames)
+      itachIPs: function() {
+         // this.$emit('msg-itachIPsUpdated',this.itachIPs)
       }
     },
     data(){
         return{
-          
+          itachIP:null,
+          itachIPs: [],
+          stbQty:[],
+          selected:'',
+          count: [...Array(24).keys()],
         }
     },
     methods: {
-      
       add(){
-        if(this.snmpStatus.txCount == 0){
-          // switch configured as RX only switch. 
-           this.sourceNames.push(this.sourceName)
-           this.sourceName = ''
-        }else{
-           if(this.sourceNames.length < this.snmpStatus.txCount){
-           this.sourceNames.push(this.sourceName)
-           this.sourceName = ''
-        //if inputs exceeds number of txPorts on switch
+          if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(this.itachIP)){
+                  this.itachIPs.push(this.itachIP)
+                  this.itachIP = ''
+
           }else{
-            alert('Exceeded number of TX ports')
-            this.sourceName = ''
+                alert('Enter Valid IP Address')
           }
-        }
 
       },
       trash(index){
-        this.sourceNames.splice(index,1)
-        //console.log(index)
-
+        this.itachIPs.splice(index,1)
       },
       save(e){
           e.preventDefault()
           M.toast({ html: `Saving updates`, classes: "rounded blue" });
           
-          const serverURL = `${location.hostname}:3000`
-          //console.log(this.sourceNames)
+          const serverURL = `${location.hostname}:3000`        
 
           // Read user inputs and save 
-          let videoInputNames = {}
-          this.sourceNames.forEach((item,index)=>{
-             videoInputNames[`in${index+1}`] = item ;
+          let itachAddresses = {}
+          this.itachIPs.forEach((item,index)=>{
+             itachAddresses[`itach${index+1}_ipaddress`] = item ;
           })
-          console.log('ir favorites', videoInputNames)
-          // Send to Express to save in 'UserInputNames.txt'
-          fetch(`http://${serverURL}/write/UserInputNames/${JSON.stringify(videoInputNames)}`)
+          // Add the number of settop boxes
+          itachAddresses.set_top_box_count = this.selected
+          // Send to Express to save in 'UserItachIPs.txt'
+          fetch(`http://${serverURL}/write/UserItachIPs/${JSON.stringify(itachAddresses)}`)
           .then((data)=>{
             this.$router.push({name:'home'})
           })
@@ -99,19 +101,12 @@ export default {
     mounted(){
         M.AutoInit() // For Materialize to work!
         window.scrollTo(0, 0) //Top of page
-    }
+  }
 }   
 
 </script>
 
 <style scoped>
-
-.container{
-  display: flex;
-  width:90%; 
-  /* justify-content: center; */
-  align-items: center;
-}
 
 .box{
    display: flex;
@@ -150,7 +145,7 @@ input[type=text]:focus{
 }
 .listDiv{
   display:grid;
-  grid-template-columns:repeat(10, 1fr);
+  grid-template-columns:repeat(5, 1fr);
   position:relative;
   margin:10px
 }
