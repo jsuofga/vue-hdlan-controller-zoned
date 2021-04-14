@@ -115,10 +115,21 @@ app.get('/read/:userinput', function(req,res){
         fs.readFile('public/UserSwitchConfig.txt',"utf8", function (err, data) {
             if (err) throw err;
             res.send(data) //
-        
         })
     
-    }else{}
+    }else if(userinput == 'UserItachIPs'){
+        fs.readFile('public/UserItachIPs.txt',"utf8", function (err, data) {
+            if (err) throw err;
+            res.send(data) //
+        })
+    
+    }else if(userinput == 'UserFavChannels'){
+        fs.readFile('public/UserFavChannels.txt',"utf8", function (err, data) {
+            if (err) throw err;
+            res.send(data) //
+        })
+    }
+    else {}
 
 })
 
@@ -176,9 +187,18 @@ app.get('/write/:file/:dataIn', function(req,res){
         fs.writeFile('public/UserSwitchConfig.txt',dataIn, function (err, data) {
             if (err) throw err;
             res.send('Updated SwitchConfig') 
-                    
-    })
-    }else{}
+         })
+    } else if (userinput == 'UserItachIPs') {
+        fs.writeFile('public/UserItachIPs.txt', dataIn, function (err, data) {
+            if (err) throw err;
+            res.send('Updated UserItachIPs')
+        })
+    } else if (userinput == 'UserFavChannels') {
+        fs.writeFile('public/UserFavChannels.txt', dataIn, function (err, data) {
+            if (err) throw err;
+            res.send(data) //
+        })
+    }else {}
   
 
 })
