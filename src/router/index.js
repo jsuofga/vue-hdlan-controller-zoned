@@ -2,14 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Zones from '@/components/Zones'
-// import Zone1 from '@/components/Zone1'
-// import Zone2 from '@/components/Zone2'
-// import Zone3 from '@/components/Zone3'
-// import Zone4 from '@/components/Zone4'
-// import Zone5 from '@/components/Zone5'
-// import Zone6 from '@/components/Zone6'
-// import Zone7 from '@/components/Zone7'
-// import Zone8 from '@/components/Zone8'
 import Ipaddress from '@/components/Ipaddress'
 import Status from '@/components/Status'
 import Sidenav from '@/components/Sidenav'
@@ -20,6 +12,9 @@ import Dashboard from "@/components/Dashboard";
 import Timer from "@/components/Timer";
 import Capacitycontrol from "@/components/Capacitycontrol";
 import Update from "@/components/Update";
+import RemoteControl from "@/components/RemoteControl";
+import Itach from "@/components/Itach";
+import Favoritechannels from "@/components/Favoritechannels";
 
 Vue.use(Router)
 
@@ -40,46 +35,7 @@ export default new Router({
       name: 'zones',
       component: Zones
     },
-    // {
-    //   path: '/zone1',
-    //   name: 'zone1',
-    //   component: Zone1
-    // },
-    // {
-    //   path: '/zone2',
-    //   name: 'zone2',
-    //   component: Zone2
-    // },
-    //     {
-    //   path: '/zone3',
-    //   name: 'zone3',
-    //   component: Zone3
-    // },
-    // {
-    //   path: '/zone4',
-    //   name: 'zone4',
-    //   component: Zone4
-    // },
-    // {
-    //   path: '/zone5',
-    //   name: 'zone5',
-    //   component: Zone5
-    // },
-    // {
-    //   path: '/zone6',
-    //   name: 'zone6',
-    //   component: Zone6
-    // },
-    // {
-    //   path: '/zone7',
-    //   name: 'zone7',
-    //   component: Zone7
-    // },
-    // {
-    //   path: '/zone8',
-    //   name: 'zone8',
-    //   component: Zone8
-    // },
+
     {
       path: '/ipaddress',
       name: 'ipaddress',
@@ -124,6 +80,21 @@ export default new Router({
       path: '/update',
       name: 'update',
       component: Update
+    },
+    {
+      path: '/remotecontrol',
+      name: 'remotecontrol',
+      component: RemoteControl
+    },
+    {
+      path: '/itach',
+      name: 'itach',
+      component: Itach
+    },
+    {
+      path: '/favoritechannels',
+      name: 'favoritechannels',
+      component: Favoritechannels
     },
 
   ]
