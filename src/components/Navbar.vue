@@ -7,13 +7,13 @@
             <div v-else class="brand-logo center">
                 <img src="@/assets/images/octava_logo_white-200.png">  
             </div>
-            <ul class="hide-on-med-and-down">
+            <ul >
                 <li><a @click= "openModal1"><i class="material-icons">menu</i></a></li>
             </ul>
              <span v-if= "snmpStatus.SwitchPingTest === 'fail'" class="new badge red" data-badge-caption="switch not detected!"></span>
              <span v-if= "pingControllerStatus === 'fail'" class="new badge red" data-badge-caption="HDLAN Controller not detected!"></span>
              <span v-if= "snmpStatus.PoE === 0 " class="new badge red" data-badge-caption="No PoE Power"></span>
-            <span class="right">HDLAN 041421&nbsp;&nbsp;</span>
+            <span class="right">HDLAN 042821&nbsp;&nbsp;</span>
         </div>
     </nav>
 
@@ -115,7 +115,7 @@ export default {
         },
         submit(){
             this.modalInstance1.close();
-            if(this.admin =='octava'){
+            if(this.admin =='octava' ||this.admin =='Octava' ){  // take care of table auto cap keyboard!
                 this.admin = ''
                 this.modalInstance2.open();
             }else{

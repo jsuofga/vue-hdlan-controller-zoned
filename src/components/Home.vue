@@ -139,7 +139,7 @@ export default {
     grid-column-gap: 25px;
     justify-content: center;
     align-items: center;
-    height:80vh;
+    height:90vh;
     /* border:1px solid red ; */
 }
 .roundBtn{
@@ -148,9 +148,9 @@ export default {
    justify-content: center;
    align-items: center;
    border:5px solid white;
-   font-size: 2rem;
-   height:180px;
-   width:180px;
+   font-size: 1.5rem;
+   height:150px;
+   width:150px;
    border-radius: 50%;
    background-color: rgb(28,28,30) ;
 }
